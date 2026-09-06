@@ -19,7 +19,7 @@ Overview
 - Input validation
 - MySQL database integration
 
-## 🏗️ Architecture
+##  Architecture
 
 ```text
 React + Vite Frontend
@@ -54,7 +54,7 @@ JwtAuthenticationFilter
 Protected API
 ```
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Layer | Technology |
 |---|---|
@@ -68,7 +68,7 @@ Protected API
 | Build Tool | Maven |
 | API Testing | Postman |
 
-## ✨ Modules
+##  Modules
 
 ### Authentication
 - User registration
@@ -120,7 +120,7 @@ The dashboard provides:
 - Category-wise expense
 - Payment-method-wise expense
 
-## 🔐 Security
+##  Security
 
 PEMS uses stateless JWT authentication with Spring Security.
 
@@ -134,7 +134,7 @@ Passwords are encrypted using `BCryptPasswordEncoder` and are not stored as plai
 
 The `JwtAuthenticationFilter` validates bearer tokens for protected requests.
 
-## 🗄️ Database Structure
+##  Database Structure
 
 ### Users
 
@@ -182,7 +182,7 @@ updated_at
 User 1 ───────── N Expense N ───────── 1 Category
 ```
 
-## 🔗 API Endpoints
+##  API Endpoints
 
 ### Authentication
 
@@ -227,7 +227,7 @@ DELETE /api/expenses/{id}
 GET /api/dashboard
 ```
 
-## 📊 Example Dashboard Response
+##  Example Dashboard Response
 
 ```json
 {
@@ -244,7 +244,7 @@ GET /api/dashboard
 }
 ```
 
-## ✅ Validation
+##  Validation
 
 The backend uses Bean Validation annotations including:
 
@@ -268,7 +268,7 @@ Example validation response:
 }
 ```
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -298,7 +298,7 @@ npm run dev
 
 Use the Vite development URL displayed in the terminal.
 
-## 🧪 Testing
+##  Testing
 
 The application has been tested using Postman and the React frontend.
 
@@ -317,7 +317,7 @@ Tested areas:
 - Protected frontend routes
 - End-to-end application flow
 
-## 📁 Backend Structure
+##  Backend Structure
 
 ```text
 src/main/java/com/example/pems/
@@ -356,7 +356,7 @@ src/main/java/com/example/pems/
     └── SecurityConfig
 ```
 
-## 🎯 Project Status
+##  Project Status
 
 **Core PEMS application: Complete ✅**
 
@@ -371,7 +371,7 @@ src/main/java/com/example/pems/
 - Validation ✅
 - End-to-End Testing ✅
 
-## 🔮 Future Scope
+##  Future Scope
 
 - Advanced graphical reports
 - Monthly and yearly expense analysis
@@ -384,7 +384,7 @@ src/main/java/com/example/pems/
 - Advanced role-based authorization
 - Financial insights and recommendations
 
-## 👨‍💻 Project
+##  Project
 
 **Personal Expense Management System (PEMS)**
 
