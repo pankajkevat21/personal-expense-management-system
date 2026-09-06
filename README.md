@@ -2,7 +2,7 @@
 
 A full-stack web application for managing personal expenses, organizing categories, and viewing expense summaries through a dashboard.
 
-## 📌 Overview
+Overview
 
 **Personal Expense Management System (PEMS)** provides a centralized way to record and manage personal expenses.
 
