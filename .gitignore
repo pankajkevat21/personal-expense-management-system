@@ -1,0 +1,46 @@
+# =========================
+# Maven / Spring Boot
+# =========================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# =========================
+# Node / React / Vite
+# =========================
+node_modules/
+dist/
+.vite/
+
+# =========================
+# macOS
+# =========================
+.DS_Store
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# Spring local/prod config
+application-local.properties
+application-prod.properties
+
+# =========================
+# OS / Editor
+# =========================
+.vscode/
