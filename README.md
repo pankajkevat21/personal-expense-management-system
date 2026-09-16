@@ -358,18 +358,18 @@ src/main/java/com/example/pems/
 
 ##  Project Status
 
-**Core PEMS application: Complete ✅**
+**Core PEMS application: Complete **
 
-- Authentication ✅
-- JWT Security ✅
-- User Management ✅
-- Category CRUD ✅
-- Expense CRUD ✅
-- Dashboard ✅
-- React Frontend ✅
-- Protected Routes ✅
-- Validation ✅
-- End-to-End Testing ✅
+- Authentication 
+- JWT Security 
+- User Management 
+- Category CRUD 
+- Expense CRUD 
+- Dashboard
+- React Frontend 
+- Protected Routes 
+- Validation 
+- End-to-End Testing 
 
 ##  Future Scope
 
