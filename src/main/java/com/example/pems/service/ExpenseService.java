@@ -1,5 +1,5 @@
 package com.example.pems.service;
-
+import com.example.pems.exception.ResourceNotFoundException;
 import com.example.pems.entity.Expense;
 import com.example.pems.entity.User;
 import com.example.pems.repository.ExpenseRepository;
@@ -33,9 +33,7 @@ public class ExpenseService {
             Pageable pageable) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
-
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         Long userId = user.getId();
 
         if (categoryId != null && from != null && to != null) {

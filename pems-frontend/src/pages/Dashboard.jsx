@@ -1,410 +1,166 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { api } from "../services/api";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../api/axios';
+import {
+    PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
+    BarChart, Bar, XAxis, YAxis, CartesianGrid,
+} from 'recharts';
 
-function Dashboard() {
+const COLORS = [
+    '#2563eb', '#16a34a', '#dc2626', '#f59e0b',
+    '#8b5cf6', '#06b6d4', '#ec4899', '#84cc16',
+];
 
+export default function Dashboard() {
+    const [data, setData] = useState(null);
     const navigate = useNavigate();
 
-    const [dashboard, setDashboard] = useState(null);
-    const [error, setError] = useState("");
-
-    const user =
-        JSON.parse(localStorage.getItem("user")) || {};
-
     useEffect(() => {
+        api.get('/dashboard')
+            .then(res => setData(res.data))
+            .catch(err => {
+                console.error(err);
+                if (err.response?.status === 401) {
+                    localStorage.clear();
+                    navigate('/login');
+                }
+            });
+    }, []);
 
-        const token = localStorage.getItem("token");
+    if (!data) return <p style={{ padding: '20px' }}>Loading...</p>;
 
-        if (!token) {
-            navigate("/");
-            return;
-        }
+    const categoryExpenseData = Object.entries(data.categoryWiseExpense || {})
+        .map(([name, value]) => ({ name, value }));
 
-        loadDashboard();
+    const categoryIncomeData = Object.entries(data.categoryWiseIncome || {})
+        .map(([name, value]) => ({ name, value }));
 
-    }, [navigate]);
-
-    const loadDashboard = async () => {
-
-        try {
-
-            const data = await api.dashboard();
-
-            setDashboard(data);
-
-        } catch (error) {
-
-            setError(error.message);
-
-        }
-    };
-
-    const handleLogout = () => {
-
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-
-        navigate("/");
-    };
-
-    const formatAmount = (amount) => {
-
-        return Number(amount || 0).toLocaleString(
-            "en-IN",
-            {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }
-        );
-    };
-
-    if (error) {
-
-        return (
-            <div className="dashboard-page">
-
-                <div className="error-container">
-
-                    <h2>
-                        Unable to load dashboard
-                    </h2>
-
-                    <p className="error">
-                        {error}
-                    </p>
-
-                    <button onClick={handleLogout}>
-                        Back to Login
-                    </button>
-
-                </div>
-
-            </div>
-        );
-    }
-
-    if (!dashboard) {
-
-        return (
-            <div className="loading-container">
-
-                <h2>
-                    Loading Dashboard...
-                </h2>
-
-            </div>
-        );
-    }
-
-    const categoryData =
-        Object.entries(
-            dashboard.categoryWise || {}
-        );
-
-    const paymentData =
-        Object.entries(
-            dashboard.paymentMethodWise || {}
-        );
+    const compareData = [
+        { name: 'Total', Income: Number(data.totalIncome), Expense: Number(data.totalExpense) },
+        { name: 'Monthly', Income: Number(data.monthlyIncome), Expense: Number(data.monthlyExpense) },
+    ];
 
     return (
-        <div className="dashboard-page">
+        <div className="page">
+            <h2>Dashboard</h2>
 
-            {/* ================= NAVBAR ================= */}
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '24px' }}>
+                <div className="card">
+                    <h4>Total Income</h4>
+                    <p style={{ color: '#16a34a', fontSize: '22px', fontWeight: 'bold' }}>
+                        ₹ {data.totalIncome ?? 0}
+                    </p>
+                </div>
+                <div className="card">
+                    <h4>Total Expense</h4>
+                    <p style={{ color: '#dc2626', fontSize: '22px', fontWeight: 'bold' }}>
+                        ₹ {data.totalExpense ?? 0}
+                    </p>
+                </div>
+                <div className="card">
+                    <h4>Net Savings</h4>
+                    <p style={{
+                        color: Number(data.netSavings) >= 0 ? '#16a34a' : '#dc2626',
+                        fontSize: '22px',
+                        fontWeight: 'bold'
+                    }}>
+                        ₹ {data.netSavings ?? 0}
+                    </p>
+                </div>
+                <div className="card">
+                    <h4>Monthly Income</h4>
+                    <p>₹ {data.monthlyIncome ?? 0}</p>
+                </div>
+                <div className="card">
+                    <h4>Monthly Expense</h4>
+                    <p>₹ {data.monthlyExpense ?? 0}</p>
+                </div>
+                <div className="card">
+                    <h4>Monthly Savings</h4>
+                    <p>₹ {data.monthlySavings ?? 0}</p>
+                </div>
+                <div className="card">
+                    <h4>Today's Expense</h4>
+                    <p>₹ {data.todayExpense ?? 0}</p>
+                </div>
+                <div className="card">
+                    <h4>Total Transactions</h4>
+                    <p>{data.totalTransactions ?? 0}</p>
+                </div>
+            </div>
 
-            <header className="navbar">
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
 
-                <div
-                    className="logo"
-                    onClick={() =>
-                        navigate("/dashboard")
-                    }
-                >
-                    PEMS
+                <div className="card">
+                    <h3>Expense by Category</h3>
+                    {categoryExpenseData.length === 0 ? (
+                        <p>No data</p>
+                    ) : (
+                        <ResponsiveContainer width="100%" height={300}>
+                            <PieChart>
+                                <Pie
+                                    data={categoryExpenseData}
+                                    dataKey="value"
+                                    nameKey="name"
+                                    cx="50%"
+                                    cy="50%"
+                                    outerRadius={100}
+                                    label
+                                >
+                                    {categoryExpenseData.map((_, i) => (
+                                        <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip />
+                                <Legend />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    )}
                 </div>
 
-
-                <nav className="nav-menu">
-
-                    <button
-                        className="active-nav"
-                        onClick={() =>
-                            navigate("/dashboard")
-                        }
-                    >
-                        Dashboard
-                    </button>
-
-                    <button
-                        onClick={() =>
-                            navigate("/expenses")
-                        }
-                    >
-                        Expenses
-                    </button>
-
-                    <button
-                        onClick={() =>
-                            navigate("/categories")
-                        }
-                    >
-                        Categories
-                    </button>
-
-                </nav>
-
-
-                <div className="nav-user">
-
-                    <span>
-                        {user.name}
-                    </span>
-
-                    <button
-                        onClick={handleLogout}
-                    >
-                        Logout
-                    </button>
-
+                <div className="card">
+                    <h3>Income by Category</h3>
+                    {categoryIncomeData.length === 0 ? (
+                        <p>No data</p>
+                    ) : (
+                        <ResponsiveContainer width="100%" height={300}>
+                            <PieChart>
+                                <Pie
+                                    data={categoryIncomeData}
+                                    dataKey="value"
+                                    nameKey="name"
+                                    cx="50%"
+                                    cy="50%"
+                                    outerRadius={100}
+                                    label
+                                >
+                                    {categoryIncomeData.map((_, i) => (
+                                        <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip />
+                                <Legend />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    )}
                 </div>
 
-            </header>
-
-
-            {/* ================= CONTENT ================= */}
-
-            <main className="dashboard-content">
-
-                <div className="dashboard-header">
-
-                    <div>
-
-                        <h1>
-                            Dashboard
-                        </h1>
-
-                        <p>
-                            Welcome back, {user.name}
-                        </p>
-
-                    </div>
-
-                    <button
-                        className="primary-button"
-                        onClick={() =>
-                            navigate("/expenses")
-                        }
-                    >
-                        + Add Expense
-                    </button>
-
+                <div className="card" style={{ gridColumn: 'span 2' }}>
+                    <h3>Income vs Expense</h3>
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={compareData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="Income" fill="#16a34a" />
+                            <Bar dataKey="Expense" fill="#dc2626" />
+                        </BarChart>
+                    </ResponsiveContainer>
                 </div>
 
-
-                {/* SUMMARY CARDS */}
-
-                <div className="dashboard-cards">
-
-                    <div className="dashboard-card">
-
-                        <div className="card-title">
-                            Total Expense
-                        </div>
-
-                        <div className="card-value">
-                            ₹{formatAmount(
-                                dashboard.totalExpense
-                            )}
-                        </div>
-
-                    </div>
-
-
-                    <div className="dashboard-card">
-
-                        <div className="card-title">
-                            This Month
-                        </div>
-
-                        <div className="card-value">
-                            ₹{formatAmount(
-                                dashboard.monthlyExpense
-                            )}
-                        </div>
-
-                    </div>
-
-
-                    <div className="dashboard-card">
-
-                        <div className="card-title">
-                            Today
-                        </div>
-
-                        <div className="card-value">
-                            ₹{formatAmount(
-                                dashboard.todayExpense
-                            )}
-                        </div>
-
-                    </div>
-
-
-                    <div className="dashboard-card">
-
-                        <div className="card-title">
-                            Transactions
-                        </div>
-
-                        <div className="card-value">
-                            {dashboard.totalTransactions}
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                {/* CATEGORY + PAYMENT */}
-
-                <div className="dashboard-grid">
-
-                    <section className="dashboard-section">
-
-                        <div className="section-header">
-
-                            <h2>
-                                Category Wise
-                            </h2>
-
-                        </div>
-
-                        {categoryData.length === 0 ? (
-
-                            <p className="empty-text">
-                                No category data available.
-                            </p>
-
-                        ) : (
-
-                            <div className="data-list">
-
-                                {categoryData.map(
-                                    ([category, amount]) => (
-
-                                        <div
-                                            className="data-row"
-                                            key={category}
-                                        >
-
-                                            <span>
-                                                {category}
-                                            </span>
-
-                                            <strong>
-                                                ₹{formatAmount(
-                                                    amount
-                                                )}
-                                            </strong>
-
-                                        </div>
-
-                                    )
-                                )}
-
-                            </div>
-
-                        )}
-
-                    </section>
-
-
-                    <section className="dashboard-section">
-
-                        <div className="section-header">
-
-                            <h2>
-                                Payment Methods
-                            </h2>
-
-                        </div>
-
-                        {paymentData.length === 0 ? (
-
-                            <p className="empty-text">
-                                No payment data available.
-                            </p>
-
-                        ) : (
-
-                            <div className="data-list">
-
-                                {paymentData.map(
-                                    ([method, amount]) => (
-
-                                        <div
-                                            className="data-row"
-                                            key={method}
-                                        >
-
-                                            <span>
-                                                {method}
-                                            </span>
-
-                                            <strong>
-                                                ₹{formatAmount(
-                                                    amount
-                                                )}
-                                            </strong>
-
-                                        </div>
-
-                                    )
-                                )}
-
-                            </div>
-
-                        )}
-
-                    </section>
-
-                </div>
-
-
-                {/* QUICK ACTIONS */}
-
-                <section className="dashboard-section quick-actions">
-
-                    <h2>
-                        Quick Actions
-                    </h2>
-
-                    <div className="action-buttons">
-
-                        <button
-                            onClick={() =>
-                                navigate("/expenses")
-                            }
-                        >
-                            Manage Expenses
-                        </button>
-
-                        <button
-                            onClick={() =>
-                                navigate("/categories")
-                            }
-                        >
-                            Manage Categories
-                        </button>
-
-                    </div>
-
-                </section>
-
-            </main>
-
+            </div>
         </div>
     );
 }
-
-export default Dashboard;

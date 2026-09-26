@@ -5,79 +5,61 @@ import java.util.Map;
 
 public class DashboardResponse {
 
+    // Expense
     private BigDecimal totalExpense;
     private BigDecimal monthlyExpense;
     private BigDecimal todayExpense;
     private long totalTransactions;
 
-    private Map<String, BigDecimal> categoryWise;
-    private Map<String, BigDecimal> paymentMethodWise;
+    // Income (new)
+    private BigDecimal totalIncome;
+    private BigDecimal monthlyIncome;
 
-    public DashboardResponse() {
-    }
+    // Savings (new)
+    private BigDecimal netSavings;
+    private BigDecimal monthlySavings;
+
+    // Charts
+    private Map<String, BigDecimal> categoryWiseExpense;
+    private Map<String, BigDecimal> paymentMethodWiseExpense;
+    private Map<String, BigDecimal> categoryWiseIncome;
 
     public DashboardResponse(
             BigDecimal totalExpense,
             BigDecimal monthlyExpense,
             BigDecimal todayExpense,
             long totalTransactions,
-            Map<String, BigDecimal> categoryWise,
-            Map<String, BigDecimal> paymentMethodWise) {
+            BigDecimal totalIncome,
+            BigDecimal monthlyIncome,
+            BigDecimal netSavings,
+            BigDecimal monthlySavings,
+            Map<String, BigDecimal> categoryWiseExpense,
+            Map<String, BigDecimal> paymentMethodWiseExpense,
+            Map<String, BigDecimal> categoryWiseIncome) {
 
         this.totalExpense = totalExpense;
         this.monthlyExpense = monthlyExpense;
         this.todayExpense = todayExpense;
         this.totalTransactions = totalTransactions;
-        this.categoryWise = categoryWise;
-        this.paymentMethodWise = paymentMethodWise;
+        this.totalIncome = totalIncome;
+        this.monthlyIncome = monthlyIncome;
+        this.netSavings = netSavings;
+        this.monthlySavings = monthlySavings;
+        this.categoryWiseExpense = categoryWiseExpense;
+        this.paymentMethodWiseExpense = paymentMethodWiseExpense;
+        this.categoryWiseIncome = categoryWiseIncome;
     }
 
-    public BigDecimal getTotalExpense() {
-        return totalExpense;
-    }
-
-    public void setTotalExpense(BigDecimal totalExpense) {
-        this.totalExpense = totalExpense;
-    }
-
-    public BigDecimal getMonthlyExpense() {
-        return monthlyExpense;
-    }
-
-    public void setMonthlyExpense(BigDecimal monthlyExpense) {
-        this.monthlyExpense = monthlyExpense;
-    }
-
-    public BigDecimal getTodayExpense() {
-        return todayExpense;
-    }
-
-    public void setTodayExpense(BigDecimal todayExpense) {
-        this.todayExpense = todayExpense;
-    }
-
-    public long getTotalTransactions() {
-        return totalTransactions;
-    }
-
-    public void setTotalTransactions(long totalTransactions) {
-        this.totalTransactions = totalTransactions;
-    }
-
-    public Map<String, BigDecimal> getCategoryWise() {
-        return categoryWise;
-    }
-
-    public void setCategoryWise(Map<String, BigDecimal> categoryWise) {
-        this.categoryWise = categoryWise;
-    }
-
-    public Map<String, BigDecimal> getPaymentMethodWise() {
-        return paymentMethodWise;
-    }
-
-    public void setPaymentMethodWise(
-            Map<String, BigDecimal> paymentMethodWise) {
-        this.paymentMethodWise = paymentMethodWise;
-    }
+    // Getters
+    public BigDecimal getTotalExpense() { return totalExpense; }
+    public BigDecimal getMonthlyExpense() { return monthlyExpense; }
+    public BigDecimal getTodayExpense() { return todayExpense; }
+    public long getTotalTransactions() { return totalTransactions; }
+    public BigDecimal getTotalIncome() { return totalIncome; }
+    public BigDecimal getMonthlyIncome() { return monthlyIncome; }
+    public BigDecimal getNetSavings() { return netSavings; }
+    public BigDecimal getMonthlySavings() { return monthlySavings; }
+    public Map<String, BigDecimal> getCategoryWiseExpense() { return categoryWiseExpense; }
+    public Map<String, BigDecimal> getPaymentMethodWiseExpense() { return paymentMethodWiseExpense; }
+    public Map<String, BigDecimal> getCategoryWiseIncome() { return categoryWiseIncome; }
 }

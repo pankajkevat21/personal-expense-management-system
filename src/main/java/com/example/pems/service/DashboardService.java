@@ -35,58 +35,69 @@ public class DashboardService {
         Long userId = user.getId();
 
         LocalDate today = LocalDate.now();
-
         YearMonth currentMonth = YearMonth.now();
+        LocalDate monthStart = currentMonth.atDay(1);
+        LocalDate monthEnd = currentMonth.atEndOfMonth();
 
-        LocalDate monthStart =
-                currentMonth.atDay(1);
-
-        LocalDate monthEnd =
-                currentMonth.atEndOfMonth();
-
+        // ============ EXPENSE ============
         BigDecimal totalExpense =
                 dashboardRepository.getTotalExpense(userId);
 
         BigDecimal monthlyExpense =
                 dashboardRepository.getExpenseBetweenDates(
-                        userId,
-                        monthStart,
-                        monthEnd
-                );
+                        userId, monthStart, monthEnd);
 
         BigDecimal todayExpense =
                 dashboardRepository.getExpenseBetweenDates(
-                        userId,
-                        today,
-                        today
-                );
+                        userId, today, today);
 
         long totalTransactions =
                 dashboardRepository.getTotalTransactions(userId);
 
-        Map<String, BigDecimal> categoryWise =
+        // ============ INCOME ============
+        BigDecimal totalIncome =
+                dashboardRepository.getTotalIncome(userId);
+
+        BigDecimal monthlyIncome =
+                dashboardRepository.getIncomeBetweenDates(
+                        userId, monthStart, monthEnd);
+
+        // ============ SAVINGS ============
+        BigDecimal netSavings =
+                totalIncome.subtract(totalExpense);
+
+        BigDecimal monthlySavings =
+                monthlyIncome.subtract(monthlyExpense);
+
+        // ============ CHARTS ============
+        Map<String, BigDecimal> categoryWiseExpense =
                 new LinkedHashMap<>();
 
         for (Object[] row :
                 dashboardRepository.getCategoryWiseExpense(userId)) {
-
             String category = (String) row[0];
             BigDecimal amount = (BigDecimal) row[1];
-
-            categoryWise.put(category, amount);
+            categoryWiseExpense.put(category, amount);
         }
 
-        Map<String, BigDecimal> paymentMethodWise =
+        Map<String, BigDecimal> paymentMethodWiseExpense =
                 new LinkedHashMap<>();
 
         for (Object[] row :
-                dashboardRepository
-                        .getPaymentMethodWiseExpense(userId)) {
-
-            String paymentMethod = (String) row[0];
+                dashboardRepository.getPaymentMethodWiseExpense(userId)) {
+            String method = (String) row[0];
             BigDecimal amount = (BigDecimal) row[1];
+            paymentMethodWiseExpense.put(method, amount);
+        }
 
-            paymentMethodWise.put(paymentMethod, amount);
+        Map<String, BigDecimal> categoryWiseIncome =
+                new LinkedHashMap<>();
+
+        for (Object[] row :
+                dashboardRepository.getCategoryWiseIncome(userId)) {
+            String category = (String) row[0];
+            BigDecimal amount = (BigDecimal) row[1];
+            categoryWiseIncome.put(category, amount);
         }
 
         return new DashboardResponse(
@@ -94,8 +105,13 @@ public class DashboardService {
                 monthlyExpense,
                 todayExpense,
                 totalTransactions,
-                categoryWise,
-                paymentMethodWise
+                totalIncome,
+                monthlyIncome,
+                netSavings,
+                monthlySavings,
+                categoryWiseExpense,
+                paymentMethodWiseExpense,
+                categoryWiseIncome
         );
     }
 }

@@ -1,99 +1,53 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { api } from "../services/api";
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import api from '../api/axios';
 
-function Login() {
-
+export default function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-
-    const handleSubmit = async (e) => {
-
+    const handleLogin = async (e) => {
         e.preventDefault();
-        setError("");
-
         try {
+            const res = await api.post('/auth/login', { email, password });
 
-            const data =
-                await api.login(email, password);
+            // Token aur user info save karo
+            localStorage.setItem('token', res.data.token);
+            localStorage.setItem('user', JSON.stringify(res.data));
 
-            localStorage.setItem(
-                "token",
-                data.token
-            );
-
-            localStorage.setItem(
-                "user",
-                JSON.stringify({
-                    id: data.userId,
-                    name: data.name,
-                    email: data.email
-                })
-            );
-
-            navigate("/dashboard");
-
-        } catch (error) {
-            setError(error.message);
+            alert('Login successful!');
+            navigate('/dashboard');
+        } catch (err) {
+            alert(err.response?.data?.message || 'Invalid email or password');
         }
     };
 
     return (
         <div className="auth-container">
-
-            <form
-                className="auth-form"
-                onSubmit={handleSubmit}
-            >
-
-                <h1>PEMS</h1>
-
+            <div className="auth-card">
                 <h2>Login</h2>
-
-                {error && (
-                    <p className="error">
-                        {error}
-                    </p>
-                )}
-
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)
-                    }
-                    required
-                />
-
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(e.target.value)
-                    }
-                    required
-                />
-
-                <button type="submit">
-                    Login
-                </button>
-
+                <form onSubmit={handleLogin}>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <button type="submit">Login</button>
+                </form>
                 <p>
-                    Don't have an account?{" "}
-                    <Link to="/register">
-                        Register
-                    </Link>
+                    Don't have an account? <Link to="/register">Register here</Link>
                 </p>
-
-            </form>
-
+            </div>
         </div>
     );
 }
-
-export default Login;

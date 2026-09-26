@@ -181,25 +181,31 @@ sequenceDiagram
 
 > 💡 **Add your screenshots in `docs/screenshots/` and uncomment below:**
 
-<!-- 
+
 ### Login Page
-![Login](docs/screenshots/login.png)
+![Login](docs/screenshots/Login page.png)
 
 ### Register Page
-![Register](docs/screenshots/register.png)
+![Register](docs/screenshots/Register page.png)
 
 ### Dashboard
-![Dashboard](docs/screenshots/dashboard.png)
+![Dashboard](docs/screenshots/dashboard page.png)
+
+### Dashboard with charts
+![Dashboard](docs/screenshots/dashboard with charts.png)
+
+### Dashboard night
+![Dashboard](docs/screenshots/dashboard night.png)
 
 ### Expenses
-![Expenses](docs/screenshots/expenses.png)
+![Expenses](docs/screenshots/Expenses.png)
 
 ### Incomes
 ![Incomes](docs/screenshots/incomes.png)
 
 ### Categories
-![Categories](docs/screenshots/categories.png)
--->
+![Categories](docs/screenshots/Categories page.png)
+
 
 ---
 
@@ -227,7 +233,7 @@ That's it! Docker will handle Java, Node.js, MySQL, and everything else.
 #### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/pems.git
+git clone https://github.com/pankajkevat21/personal-expense-management-system.git
 cd pems
 ```
 
@@ -669,11 +675,11 @@ This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) f
 
 ## 👤 Author
 
-**Your Name**
+**Pankaj Kevat**
 
-- 📧 Email: your.email@example.com
-- 💼 LinkedIn: [linkedin.com/in/your-profile](https://linkedin.com/in/your-profile)
-- 🐙 GitHub: [@your-username](https://github.com/your-username)
+- 📧 Email: pankajkevat21@gmail.com
+-  🔗 **LinkedIn:** [Pankaj Kevat](https://www.linkedin.com/in/pankaj-kevat-89393a3a6/)
+- 🐙 GitHub: [@pankajkevat21](https://github.com/pankajkevat21/)
 
 ---
 

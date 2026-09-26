@@ -1,141 +1,683 @@
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
-body { background: #f5f7fa; color: #222; }
+/* ============================================================
+   PEMS – Professional Stylesheet with Dark Mode & Animations
+   Light + Dark themes (manual toggle + system fallback)
+   ============================================================ */
 
-/* Auth pages */
+/* ---------- 1. CSS Variables (LIGHT THEME – default) ---------- */
+:root,
+body.light {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #dbeafe;
+    --danger: #dc2626;
+    --danger-light: #fee2e2;
+    --success: #16a34a;
+    --success-light: #dcfce7;
+    --warning: #f59e0b;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --surface-hover: #f1f5f9;
+    --text: #0f172a;
+    --text-muted: #475569;
+    --border: #e2e8f0;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --font: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --transition: 0.2s ease;
+}
+
+/* ---------- 2. CSS Variables (DARK THEME – manual) ---------- */
+body.dark {
+    --primary: #3b82f6;
+    --primary-dark: #2563eb;
+    --primary-light: #1e3a8a;
+    --danger: #ef4444;
+    --danger-light: #7f1d1d;
+    --success: #22c55e;
+    --success-light: #14532d;
+    --warning: #fbbf24;
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface-hover: #334155;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: #334155;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- 2b. System preference (agar user ne manually select nahi kiya) ---------- */
+@media (prefers-color-scheme: dark) {
+    body:not(.light):not(.dark) {
+        --primary: #3b82f6;
+        --primary-dark: #2563eb;
+        --primary-light: #1e3a8a;
+        --danger: #ef4444;
+        --danger-light: #7f1d1d;
+        --success: #22c55e;
+        --success-light: #14532d;
+        --warning: #fbbf24;
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --surface-hover: #334155;
+        --text: #f1f5f9;
+        --text-muted: #94a3b8;
+        --border: #334155;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* ---------- 3. Reset & Base ---------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* ---------- 4. Keyframe Animations ---------- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-16px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------- 5. Auth Pages ---------- */
 .auth-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+    padding: 20px;
+    animation: fadeIn 0.4s ease-out;
+    transition: background 0.3s ease;
 }
+
+body.dark .auth-container {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.light):not(.dark) .auth-container {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+}
+
 .auth-card {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    width: 350px;
+    background: var(--surface);
+    padding: 40px 32px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--border);
+    animation: fadeInScale 0.35s ease-out;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.auth-card h2 { margin-bottom: 20px; }
+
+.auth-card h2 {
+    margin-bottom: 28px;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+    animation: fadeInUp 0.4s ease-out 0.05s both;
+}
+
 .auth-card input {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    transition: border-color var(--transition), box-shadow var(--transition), background 0.3s ease;
 }
+
+.auth-card input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    background: var(--surface);
+}
+
 .auth-card button {
     width: 100%;
-    padding: 10px;
-    background: #2563eb;
+    padding: 12px;
+    background: var(--primary);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background var(--transition), transform 0.1s ease, box-shadow var(--transition);
+    margin-top: 8px;
 }
-.auth-card p { margin-top: 15px; text-align: center; font-size: 14px; }
 
-/* Navbar */
+.auth-card button:hover {
+    background: var(--primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.auth-card button:active {
+    transform: scale(0.97);
+}
+
+.auth-card p {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* ---------- 6. Navbar ---------- */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #1e293b;
     color: white;
-    padding: 12px 24px;
+    padding: 14px 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s ease;
 }
-.nav-brand { font-weight: bold; font-size: 20px; }
+
+body.dark .navbar {
+    background: #0f172a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.light):not(.dark) .navbar {
+        background: #0f172a;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.nav-brand {
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    color: white;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .nav-links a {
     color: #cbd5e1;
     text-decoration: none;
-    margin: 0 12px;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background var(--transition), color var(--transition), transform 0.1s ease;
 }
-.nav-links a:hover { color: white; }
+
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #cbd5e1;
+}
+
 .nav-user button {
-    background: #ef4444;
+    background: var(--danger);
     color: white;
     border: none;
-    padding: 6px 12px;
-    border-radius: 5px;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
+    transition: background var(--transition), transform 0.1s ease;
 }
 
-/* Pages */
-.page { padding: 24px; max-width: 1100px; margin: auto; }
-.page h2 { margin-bottom: 20px; }
+.nav-user button:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+}
 
-/* Forms */
+.nav-user button:active {
+    transform: scale(0.96);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    padding: 8px 12px !important;
+    border-radius: var(--radius-sm);
+    font-size: 16px !important;
+    cursor: pointer;
+    transition: background var(--transition), transform 0.15s ease !important;
+    line-height: 1;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+    transform: rotate(20deg) scale(1.05);
+}
+
+/* ---------- 7. Pages ---------- */
+.page {
+    padding: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeIn 0.35s ease-out;
+}
+
+.page h2 {
+    margin-bottom: 24px;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.page h3 {
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-muted);
+    animation: fadeInUp 0.4s ease-out 0.05s both;
+}
+
+/* ---------- 8. Forms ---------- */
 .form-row {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
-    margin-bottom: 20px;
-    background: white;
-    padding: 15px;
-    border-radius: 8px;
+    margin-bottom: 24px;
+    background: var(--surface);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    align-items: center;
+    border: 1px solid var(--border);
+    animation: fadeInUp 0.4s ease-out 0.1s both;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.form-row input, .form-row select {
-    padding: 8px;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
+
+.form-row input,
+.form-row select {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    transition: border-color var(--transition), box-shadow var(--transition), background 0.3s ease;
+    flex: 1 1 150px;
+    min-width: 0;
 }
+
+.form-row input:focus,
+.form-row select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    background: var(--surface);
+}
+
 .form-row button {
-    padding: 8px 16px;
-    background: #2563eb;
+    padding: 10px 20px;
+    background: var(--primary);
     color: white;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background var(--transition), transform 0.1s ease, box-shadow var(--transition);
+    white-space: nowrap;
 }
 
-/* Table */
+.form-row button:hover {
+    background: var(--primary-dark);
+    box-shadow: var(--shadow-md);
+}
+
+.form-row button:active {
+    transform: scale(0.97);
+}
+
+.form-row button[type="button"] {
+    background: var(--text-muted);
+}
+
+.form-row button[type="button"]:hover {
+    background: #334155;
+}
+
+/* ---------- 9. Tables ---------- */
 .data-table {
     width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 8px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border-radius: var(--radius);
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    animation: fadeInUp 0.4s ease-out 0.15s both;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.data-table th, .data-table td {
-    padding: 10px;
-    border-bottom: 1px solid #e2e8f0;
+
+.data-table th,
+.data-table td {
+    padding: 14px 18px;
     text-align: left;
+    font-size: 14px;
 }
-.data-table th { background: #f1f5f9; }
+
+.data-table th {
+    background: var(--surface-hover);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.data-table td {
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    transition: background 0.2s ease, color 0.3s ease;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover td {
+    background: var(--surface-hover);
+}
+
 .data-table button {
-    margin-right: 5px;
-    padding: 4px 8px;
+    padding: 6px 12px;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 500;
     cursor: pointer;
+    transition: background var(--transition), transform 0.1s ease;
+    margin-right: 6px;
 }
 
-/* Dashboard cards */
+.data-table button:first-child {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+.data-table button:first-child:hover {
+    background: #bfdbfe;
+}
+
+body.dark .data-table button:first-child {
+    background: #1e3a8a;
+    color: #bfdbfe;
+}
+
+body.dark .data-table button:first-child:hover {
+    background: #1e40af;
+}
+
+.data-table button:last-child {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.data-table button:last-child:hover {
+    background: #fecaca;
+}
+
+body.dark .data-table button:last-child {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+body.dark .data-table button:last-child:hover {
+    background: #991b1b;
+}
+
+.data-table button:active {
+    transform: scale(0.95);
+}
+
+/* ---------- 10. Dashboard Cards ---------- */
 .card {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background: var(--surface);
+    padding: 24px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.3s ease, border-color 0.3s ease;
     min-width: 180px;
+    flex: 1 1 180px;
+    animation: fadeInUp 0.4s ease-out both;
 }
 
-/* Two columns */
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.10s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4) { animation-delay: 0.20s; }
+.card:nth-child(5) { animation-delay: 0.25s; }
+.card:nth-child(6) { animation-delay: 0.30s; }
+.card:nth-child(7) { animation-delay: 0.35s; }
+.card:nth-child(8) { animation-delay: 0.40s; }
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.card p {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    transition: color 0.3s ease;
+}
+
+/* ---------- 11. Two Columns ---------- */
 .two-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 28px;
 }
-.list { list-style: none; margin-top: 10px; }
+
+/* ---------- 12. Lists ---------- */
+.list {
+    list-style: none;
+    margin-top: 12px;
+}
+
 .list li {
-    background: white;
-    padding: 8px 12px;
-    margin-bottom: 6px;
-    border-radius: 6px;
+    background: var(--surface);
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: var(--radius-sm);
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    font-size: 14px;
+    transition: background var(--transition), transform 0.15s ease, box-shadow 0.2s ease, border-color 0.3s ease;
+    animation: slideInLeft 0.3s ease-out both;
 }
+
+.list li:nth-child(1) { animation-delay: 0.05s; }
+.list li:nth-child(2) { animation-delay: 0.10s; }
+.list li:nth-child(3) { animation-delay: 0.15s; }
+.list li:nth-child(4) { animation-delay: 0.20s; }
+.list li:nth-child(5) { animation-delay: 0.25s; }
+.list li:nth-child(6) { animation-delay: 0.30s; }
+
+.list li:hover {
+    background: var(--surface-hover);
+    transform: translateX(4px);
+    box-shadow: var(--shadow-md);
+}
+
 .list button {
     background: transparent;
     border: none;
-    color: red;
+    color: var(--danger);
+    font-size: 16px;
     cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background var(--transition), transform 0.1s ease;
+    line-height: 1;
+}
+
+.list button:hover {
+    background: var(--danger-light);
+    transform: scale(1.1);
+}
+
+.list button:active {
+    transform: scale(0.9);
+}
+
+/* ---------- 13. Spinner ---------- */
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 40px auto;
+}
+
+/* ---------- 14. Responsive ---------- */
+@media (max-width: 1024px) {
+    .page { padding: 20px; }
+
+    .navbar {
+        padding: 12px 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .nav-user { margin-left: auto; }
+
+    .two-columns {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row button { width: 100%; }
+
+    .data-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .auth-card { padding: 28px 20px; }
+    .page h2 { font-size: 24px; }
+    .card { min-width: 100%; }
+    .data-table th,
+    .data-table td {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
 }

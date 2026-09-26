@@ -11,6 +11,8 @@ import java.util.List;
 public interface DashboardRepository
         extends JpaRepository<Expense, Long> {
 
+    // ============== EXPENSE QUERIES ==============
+
     @Query("""
             SELECT COALESCE(SUM(e.amount), 0)
             FROM Expense e
@@ -54,4 +56,34 @@ public interface DashboardRepository
             ORDER BY SUM(e.amount) DESC
             """)
     List<Object[]> getPaymentMethodWiseExpense(Long userId);
+
+    // ============== INCOME QUERIES ==============
+
+    @Query("""
+            SELECT COALESCE(SUM(i.amount), 0)
+            FROM Income i
+            WHERE i.user.id = :userId
+            """)
+    BigDecimal getTotalIncome(Long userId);
+
+    @Query("""
+            SELECT COALESCE(SUM(i.amount), 0)
+            FROM Income i
+            WHERE i.user.id = :userId
+            AND i.incomeDate BETWEEN :startDate AND :endDate
+            """)
+    BigDecimal getIncomeBetweenDates(
+            Long userId,
+            LocalDate startDate,
+            LocalDate endDate
+    );
+
+    @Query("""
+            SELECT i.incomeCategory.name, COALESCE(SUM(i.amount), 0)
+            FROM Income i
+            WHERE i.user.id = :userId
+            GROUP BY i.incomeCategory.name
+            ORDER BY SUM(i.amount) DESC
+            """)
+    List<Object[]> getCategoryWiseIncome(Long userId);
 }

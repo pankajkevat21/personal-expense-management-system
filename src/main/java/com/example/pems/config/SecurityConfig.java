@@ -1,5 +1,4 @@
 package com.example.pems.config;
-
 import com.example.pems.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,24 +50,24 @@ public class SecurityConfig {
                 // Authorization rules
                 .authorizeHttpRequests(auth -> auth
 
-                        // CORS preflight requests
+                        // CORS preflight
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // Swagger / OpenAPI
                         .requestMatchers(
-                                HttpMethod.OPTIONS,
-                                "/**"
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/api-docs/**"
                         ).permitAll()
 
-                        // Login / authentication
-                        .requestMatchers(
-                                "/api/auth/**"
-                        ).permitAll()
+                        // Login
+                        .requestMatchers("/api/auth/**").permitAll()
 
-                        // User registration
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/users"
-                        ).permitAll()
+                        // Register
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
 
-                        // Baaki sab JWT authentication ke saath
+                        // Baaki sab JWT ke saath
                         .anyRequest().authenticated()
                 )
 
