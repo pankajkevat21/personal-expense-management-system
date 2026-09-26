@@ -11,7 +11,7 @@ A full-stack web application to track personal income, expenses, and savings wit
 
 ---
 
-## 📖 Table of Contents
+##  Table of Contents
 
 - [About the Project](#-about-the-project)
 - [Features](#-features)
@@ -32,7 +32,7 @@ A full-stack web application to track personal income, expenses, and savings wit
 
 ---
 
-## 🎯 About the Project
+##  About the Project
 
 **PEMS (Personal Expense Management System)** is a full-stack web application that helps users take control of their personal finances. Users can track daily income and expenses, categorize transactions, visualize spending patterns with interactive charts, and monitor their monthly savings — all secured with JWT-based authentication.
 
@@ -40,31 +40,31 @@ This project demonstrates **production-grade full-stack development** including 
 
 ### Why PEMS?
 
-- 📊 **Real-time Analytics** — Visualize where your money goes
-- 🔐 **Secure** — JWT authentication with BCrypt password hashing
-- 🐳 **One-Command Setup** — Docker Compose runs everything
-- 📱 **Responsive** — Works on desktop, tablet, and mobile
-- 🚀 **Production-Ready** — Nginx-served React build, layered backend
+-  **Real-time Analytics** — Visualize where your money goes
+-  **Secure** — JWT authentication with BCrypt password hashing
+-  **One-Command Setup** — Docker Compose runs everything
+-  **Responsive** — Works on desktop, tablet, and mobile
+-  **Production-Ready** — Nginx-served React build, layered backend
 
 ---
 
-## ✨ Features
+##  Features
 
-### 🔐 Authentication & Security
+###  Authentication & Security
 - JWT (JSON Web Token) based stateless authentication
 - BCrypt password hashing (passwords never stored in plain text)
 - Protected routes on both frontend and backend
 - CORS configuration for secure cross-origin requests
 - Global exception handling with consistent error responses
 
-### 💸 Expense Management
+###  Expense Management
 - Add / Edit / Delete expenses
 - Categorize expenses (Food, Travel, Shopping, Bills, Health, etc.)
 - Filter by category and date range
 - Pagination support for large datasets
 - Multiple payment methods (UPI, Cash, Card, Net Banking)
 
-### 💰 Income Management
+###  Income Management
 - Add / Edit / Delete incomes
 - Categorize incomes (Salary, Freelance, Business, Investment, Gift, etc.)
 - Filter by category and date range
@@ -75,12 +75,12 @@ This project demonstrates **production-grade full-stack development** including 
 - **Pie Charts:** Category-wise expense and income breakdown
 - **Bar Chart:** Income vs Expense comparison (Total & Monthly)
 
-### 🗂️ Category Management
+###  Category Management
 - Separate categories for income and expenses
 - Full CRUD operations
 - Pre-seeded default categories
 
-### 🐳 DevOps
+###  DevOps
 - Fully Dockerized (Frontend + Backend + Database)
 - One-command startup with Docker Compose
 - Nginx serving the production build of the React app
@@ -89,7 +89,7 @@ This project demonstrates **production-grade full-stack development** including 
 
 ---
 
-## 🛠️ Tech Stack
+## ️ Tech Stack
 
 ### Backend
 | Technology | Purpose |
@@ -124,7 +124,7 @@ This project demonstrates **production-grade full-stack development** including 
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```mermaid
 flowchart TD
@@ -145,7 +145,7 @@ Controller  →  Service  →  Repository  →  Entity  →  Database
    (API)      (Logic)      (Data Access)  (Tables)    (MySQL)
 ```
 
-### 🔐 Authentication Flow
+###  Authentication Flow
 
 ```mermaid
 sequenceDiagram
@@ -177,9 +177,8 @@ sequenceDiagram
 
 ---
 
-## 📸 Screenshots
+##  Screenshots
 
-> 💡 **Add your screenshots in `docs/screenshots/` and uncomment below:**
 ### Login Page
 ![Login](docs/screenshots/Login.png)
 
@@ -189,11 +188,11 @@ sequenceDiagram
 ### Dashboard
 ![Dashboard](docs/screenshots/Dashboard_page.png)
 
-### Dashboard with Charts
-![Dashboard](docs/screenshots/Dashboard_with_Chrts.png)
-
 ### Dashboard Night
 ![Dashboard Night](docs/screenshots/dashboard_night.png)
+
+### Dashboard with Charts
+![Dashboard](docs/screenshots/Dashboard_with_Chrts.png)
 
 ### Expenses
 ![Expenses](docs/screenshots/Expenses.png)
@@ -206,11 +205,11 @@ sequenceDiagram
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 Follow these steps to run the project on your local machine.
 
-### 📋 Prerequisites
+###  Prerequisites
 
 Before you begin, make sure you have:
 
@@ -270,9 +269,9 @@ Once you see logs like `Started PemsApplication` and `nginx: ready`, open:
 
 | Service | URL | Credentials |
 |---------|-----|-------------|
-| 🌐 **Frontend** | http://localhost | Register a new account |
-| 📚 **Swagger UI** | http://localhost:8080/swagger-ui.html | — |
-| 🗄️ **MySQL** | localhost:3307 | root / rootpassword |
+|  **Frontend** | http://localhost | Register a new account |
+|  **Swagger UI** | http://localhost:8080/swagger-ui.html | — |
+| ️ **MySQL** | localhost:3307 | root / rootpassword |
 
 #### Step 5: Try It Out!
 
@@ -281,7 +280,7 @@ Once you see logs like `Started PemsApplication` and `nginx: ready`, open:
 3. Login with the same credentials
 4. Add some categories (Food, Salary, etc.)
 5. Add an income and an expense
-6. Check out the Dashboard with charts! 📊
+6. Check out the Dashboard with charts! 
 
 #### Stopping the Application
 
@@ -307,7 +306,7 @@ docker-compose logs -f mysql
 
 ---
 
-### 🛠️ Manual Setup
+###  Manual Setup
 
 If you prefer running services directly (without Docker):
 
@@ -431,21 +430,21 @@ docker-compose logs frontend
 
 ---
 
-### 🎬 One-Minute Demo (For the Impatient)
+###  One-Minute Demo (For the Impatient)
 
 ```bash
-git clone https://github.com/your-username/pems.git
-cd pems
+git clone https://github.com/pankajkevat21/personal-expense-management-system.git
+cd personal-expense-management-system
 echo "JWT_SECRET=$(openssl rand -base64 64)" > .env
 echo "DB_PASSWORD=rootpassword" >> .env
 docker-compose up --build
 ```
 
-Then open http://localhost and register. Done! 🎉
+Then open http://localhost and register. Done! 
 
 ---
 
-## 📚 API Documentation
+##  API Documentation
 
 Once the backend is running, access **Swagger UI** at:
 
@@ -484,7 +483,7 @@ Authorization: Bearer <your_jwt_token>
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 pems/
@@ -541,7 +540,7 @@ pems/
 
 ---
 
-## 🗄️ Database Schema
+##  Database Schema
 
 ### ER Diagram
 
@@ -625,7 +624,7 @@ Similar to expenses with `income_category_id` and `income_date`.
 
 ---
 
-## 🔒 Security
+##  Security
 
 - **JWT Authentication** — Tokens signed with HMAC-SHA, expire after 24 hours
 - **BCrypt Password Hashing** — Passwords never stored in plain text
@@ -637,22 +636,22 @@ Similar to expenses with `income_category_id` and `income_date`.
 
 ---
 
-## 🚧 Future Enhancements
+##  Future Enhancements
 
-- [ ] Budget management with alerts
-- [ ] Recurring transactions (auto salary/rent)
-- [ ] Export reports to PDF/CSV
-- [ ] Email notifications for monthly summary
-- [ ] Multi-currency support
-- [ ] Mobile app (React Native)
-- [ ] Bill reminders
-- [ ] Receipt image upload
-- [ ] Unit & integration tests (JUnit + Mockito)
-- [ ] CI/CD pipeline (GitHub Actions)
+-  Budget management with alerts
+-  Recurring transactions (auto salary/rent)
+-  Export reports to PDF/CSV
+-  Email notifications for monthly summary
+-  Multi-currency support
+-  Mobile app (React Native)
+-  Bill reminders
+-  Receipt image upload
+-  Unit & integration tests (JUnit + Mockito)
+-  CI/CD pipeline (GitHub Actions)
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions, issues, and feature requests are welcome!
 
@@ -664,23 +663,18 @@ Contributions, issues, and feature requests are welcome!
 
 ---
 
-## 📄 License
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+##   Author
 
----
+   **Pankaj Kevat**
 
-## 👤 Author
-
-**Pankaj Kevat**
-
-- 📧 Email: pankajkevat21@gmail.com
--  🔗 **LinkedIn:** [Pankaj Kevat](https://www.linkedin.com/in/pankaj-kevat-89393a3a6/)
-- 🐙 GitHub: [@pankajkevat21](https://github.com/pankajkevat21/)
+-  Email: pankajkevat21@gmail.com
+-   **LinkedIn:** [Pankaj Kevat](https://www.linkedin.com/in/pankaj-kevat-89393a3a6/)
+-  GitHub: [@pankajkevat21](https://github.com/pankajkevat21/)
 
 ---
 
-## ⭐ Show Your Support
+##  Show Your Support
 
 If you liked this project, please give it a ⭐ on GitHub — it motivates me to build more!
 
