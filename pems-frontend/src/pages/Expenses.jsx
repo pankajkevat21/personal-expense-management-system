@@ -1,334 +1,169 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { api } from "../services/api";
+import { useEffect, useState } from 'react';
+import api from '../api/axios';
 
-function Expenses() {
-  const navigate = useNavigate();
-
-  const [expenses, setExpenses] = useState([]);
-  const [categories, setCategories] = useState([]);
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  const [editingId, setEditingId] = useState(null);
-
-  const [form, setForm] = useState({
-    category: "",
-    amount: "",
-    expenseDate: "",
-    expenseTime: "",
-    description: "",
-    paymentMethod: "",
-    currency: "INR"
-  });
-
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/");
-      return;
-    }
-    loadData();
-  }, [navigate]);
-
-  const loadData = async () => {
-    try {
-      setLoading(true);
-      const [expenseData, categoryData] = await Promise.all([
-        api.getExpenses(),
-        api.getCategories()
-      ]);
-      setExpenses(expenseData.content || []);
-      setCategories(categoryData);
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
+export default function Expenses() {
+    const [expenses, setExpenses] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [form, setForm] = useState({
+        amount: '',
+        categoryId: '',
+        expenseDate: new Date().toISOString().split('T')[0],
+        description: '',
+        paymentMethod: 'UPI',
+        currency: 'INR',
     });
-  };
+    const [editingId, setEditingId] = useState(null);
 
-  const resetForm = () => {
-    setForm({
-      category: "",
-      amount: "",
-      expenseDate: "",
-      expenseTime: "",
-      description: "",
-      paymentMethod: "",
-      currency: "INR"
-    });
-    setEditingId(null);
-  };
+    const fetchData = async () => {
+        try {
+            const [expRes, catRes] = await Promise.all([
+                api.get('/expenses'),
+                api.get('/categories'),
+            ]);
+            setExpenses(expRes.data.content || expRes.data);
+            setCategories(catRes.data);
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-    try {
-      const user = JSON.parse(localStorage.getItem("user"));
-      const expenseData = {
-        user: { id: user.id },
-        category: { id: Number(form.category) },
-        amount: Number(form.amount),
-        expenseDate: form.expenseDate,
-        expenseTime: form.expenseTime || null,
-        description: form.description,
-        paymentMethod: form.paymentMethod,
-        currency: form.currency
-      };
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
 
-      if (editingId) {
-        await api.updateExpense(editingId, expenseData);
-      } else {
-        await api.createExpense(expenseData);
-      }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const payload = {
+            amount: parseFloat(form.amount),
+            category: { id: parseInt(form.categoryId) },
+            expenseDate: form.expenseDate,
+            description: form.description,
+            paymentMethod: form.paymentMethod,
+            currency: form.currency,
+        };
 
-      resetForm();
-      await loadData();
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+        try {
+            if (editingId) {
+                await api.put(`/expenses/${editingId}`, payload);
+            } else {
+                await api.post('/expenses', payload);
+            }
+            setForm({
+                amount: '',
+                categoryId: '',
+                expenseDate: new Date().toISOString().split('T')[0],
+                description: '',
+                paymentMethod: 'UPI',
+                currency: 'INR',
+            });
+            setEditingId(null);
+            fetchData();
+        } catch (err) {
+            alert('Failed: ' + (err.response?.data?.message || err.message));
+        }
+    };
 
-  const handleEdit = (expense) => {
-    setEditingId(expense.id);
-    setForm({
-      category: expense.category?.id || "",
-      amount: expense.amount || "",
-      expenseDate: expense.expenseDate || "",
-      expenseTime: expense.expenseTime || "",
-      description: expense.description || "",
-      paymentMethod: expense.paymentMethod || "",
-      currency: expense.currency || "INR"
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+    const handleEdit = (exp) => {
+        setEditingId(exp.id);
+        setForm({
+            amount: exp.amount,
+            categoryId: exp.category?.id || '',
+            expenseDate: exp.expenseDate,
+            description: exp.description || '',
+            paymentMethod: exp.paymentMethod || 'UPI',
+            currency: exp.currency || 'INR',
+        });
+    };
 
-  const handleDelete = async (id) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this expense?"
-    );
-    if (!confirmed) return;
+    const handleDelete = async (id) => {
+        if (!window.confirm('Delete this expense?')) return;
+        await api.delete(`/expenses/${id}`);
+        fetchData();
+    };
 
-    try {
-      await api.deleteExpense(id);
-      await loadData();
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  // ==================== LOADING STATE (replaced) ====================
-  if (loading) {
     return (
-      <div className="expenses-page">
-        <div className="expenses-loading">
-          <h2>Loading expenses...</h2>
-        </div>
-      </div>
-    );
-  }
-
-  // ==================== MAIN RETURN (replaced) ====================
-  return (
-    <div className="expenses-page">
-
-      <header className="expenses-navbar">
-        <div
-          className="expenses-logo"
-          onClick={() => navigate("/dashboard")}
-        >
-          PEMS
-        </div>
-        <div className="expenses-nav-right">
-          <button onClick={() => navigate("/dashboard")}>
-            Dashboard
-          </button>
-          <button
-            className="expenses-active-nav"
-            onClick={() => navigate("/expenses")}
-          >
-            Expenses
-          </button>
-          <button onClick={() => navigate("/categories")}>
-            Categories
-          </button>
-          <button
-            onClick={() => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("user");
-              navigate("/");
-            }}
-          >
-            Logout
-          </button>
-        </div>
-      </header>
-
-      <main className="expenses-content">
-        <div className="expenses-header">
-          <div>
-            <h1>{editingId ? "Edit Expense" : "Add Expense"}</h1>
-            <p>Manage your personal expenses</p>
-          </div>
-        </div>
-
-        {error && <p className="expenses-error">{error}</p>}
-
-        <form className="expenses-form" onSubmit={handleSubmit}>
-          <div className="expense-field">
-            <label>Category</label>
-            <select
-              name="category"
-              value={form.category}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Category</option>
-              {categories.map(category => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="expense-field">
-            <label>Amount</label>
-            <input
-              type="number"
-              name="amount"
-              placeholder="Amount"
-              min="0.01"
-              step="0.01"
-              value={form.amount}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="expense-field">
-            <label>Expense Date</label>
-            <input
-              type="date"
-              name="expenseDate"
-              value={form.expenseDate}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="expense-field">
-            <label>Expense Time</label>
-            <input
-              type="time"
-              name="expenseTime"
-              value={form.expenseTime}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="expense-field">
-            <label>Payment Method</label>
-            <input
-              type="text"
-              name="paymentMethod"
-              placeholder="e.g. UPI, Cash, Card"
-              value={form.paymentMethod}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="expense-field">
-            <label>Currency</label>
-            <input
-              type="text"
-              name="currency"
-              placeholder="Currency"
-              value={form.currency}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="expense-field expense-description">
-            <label>Description</label>
-            <textarea
-              name="description"
-              placeholder="Description"
-              value={form.description}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="expense-form-actions">
-            <button type="submit">
-              {editingId ? "Update Expense" : "Add Expense"}
-            </button>
-            {editingId && (
-              <button type="button" onClick={resetForm}>
-                Cancel Edit
-              </button>
-            )}
-          </div>
-        </form>
-
-        <section className="expenses-section">
-          <div className="expenses-section-header">
+        <div className="page">
             <h2>Expenses</h2>
-            <span>
-              {expenses.length}{" "}
-              {expenses.length === 1 ? "Transaction" : "Transactions"}
-            </span>
-          </div>
 
-          {expenses.length === 0 ? (
-            <p className="expenses-empty">No expenses found.</p>
-          ) : (
-            <div className="expenses-list">
-              {expenses.map(expense => (
-                <div className="expenses-item" key={expense.id}>
-                  <div className="expenses-item-info">
-                    <div className="expenses-amount">₹{expense.amount}</div>
-                    <div className="expenses-details">
-                      <strong>{expense.category?.name}</strong>
-                      {expense.description && <p>{expense.description}</p>}
-                      <small>
-                        {expense.expenseDate} {expense.expenseTime || ""} •{" "}
-                        {expense.paymentMethod}
-                      </small>
-                    </div>
-                  </div>
-                  <div className="expenses-actions">
-                    <button
-                      className="expenses-edit-button"
-                      onClick={() => handleEdit(expense)}
-                    >
-                      Edit
+            <form className="form-row" onSubmit={handleSubmit}>
+                <input
+                    name="amount"
+                    type="number"
+                    step="0.01"
+                    placeholder="Amount"
+                    value={form.amount}
+                    onChange={handleChange}
+                    required
+                />
+                <select
+                    name="categoryId"
+                    value={form.categoryId}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="">Select Category</option>
+                    {categories.map((c) => (
+                        <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                </select>
+                <input
+                    name="expenseDate"
+                    type="date"
+                    value={form.expenseDate}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    name="description"
+                    placeholder="Description"
+                    value={form.description}
+                    onChange={handleChange}
+                />
+                <select name="paymentMethod" value={form.paymentMethod} onChange={handleChange}>
+                    <option value="UPI">UPI</option>
+                    <option value="CASH">Cash</option>
+                    <option value="CARD">Card</option>
+                    <option value="NET_BANKING">Net Banking</option>
+                </select>
+                <button type="submit">{editingId ? 'Update' : 'Add'}</button>
+                {editingId && (
+                    <button type="button" onClick={() => { setEditingId(null); setForm({ amount: '', categoryId: '', expenseDate: new Date().toISOString().split('T')[0], description: '', paymentMethod: 'UPI', currency: 'INR' }); }}>
+                        Cancel
                     </button>
-                    <button
-                      className="expenses-delete-button"
-                      onClick={() => handleDelete(expense.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
-      </main>
-    </div>
-  );
+                )}
+            </form>
+
+            <table className="data-table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {expenses.map((exp) => (
+                    <tr key={exp.id}>
+                        <td>{exp.expenseDate}</td>
+                        <td>{exp.category?.name}</td>
+                        <td>₹ {exp.amount}</td>
+                        <td>{exp.paymentMethod}</td>
+                        <td>{exp.description}</td>
+                        <td>
+                            <button onClick={() => handleEdit(exp)}>Edit</button>
+                            <button onClick={() => handleDelete(exp.id)}>Delete</button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
+    );
 }
-
-export default Expenses;
