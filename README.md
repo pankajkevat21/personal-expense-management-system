@@ -180,32 +180,29 @@ sequenceDiagram
 ## 📸 Screenshots
 
 > 💡 **Add your screenshots in `docs/screenshots/` and uncomment below:**
-
-
 ### Login Page
-![Login](docs/screenshots/Login page.png)
+![Login](docs/screenshots/Login.png)
 
 ### Register Page
-![Register](docs/screenshots/Register page.png)
+![Register](docs/screenshots/Register.png)
 
 ### Dashboard
-![Dashboard](docs/screenshots/dashboard page.png)
+![Dashboard](docs/screenshots/Dashboard_page.png)
 
-### Dashboard with charts
-![Dashboard](docs/screenshots/dashboard with charts.png)
+### Dashboard with Charts
+![Dashboard](docs/screenshots/Dashboard_with_Chrts.png)
 
-### Dashboard night
-![Dashboard](docs/screenshots/dashboard night.png)
+### Dashboard Night
+![Dashboard Night](docs/screenshots/dashboard_night.png)
 
 ### Expenses
 ![Expenses](docs/screenshots/Expenses.png)
 
 ### Incomes
-![Incomes](docs/screenshots/incomes.png)
+![Incomes](docs/screenshots/Incomes.png)
 
 ### Categories
-![Categories](docs/screenshots/Categories page.png)
-
+![Categories](docs/screenshots/Categories.png)
 
 ---
 
