@@ -1,151 +1,255 @@
-# 💰 PEMS - Personal Expense Management System
+# 💰 PEMS — Personal Expense Management System
 
-A full-stack web application to track personal income, expenses, and savings with a beautiful dashboard and real-time analytics.
+A full-stack personal finance management web application for tracking **income, expenses, categories, and savings** with an interactive dashboard, analytics, JWT authentication, and Dockerized deployment.
 
-![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge&logo=openjdk)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.1-brightgreen?style=for-the-badge&logo=springboot)
-![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge&logo=mysql)
-![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)
+![Java](https://img.shields.io/badge/Java-21-orange?style=for-the-badge\&logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.1-brightgreen?style=for-the-badge\&logo=springboot)
+![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge\&logo=react)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=for-the-badge\&logo=mysql)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge\&logo=docker)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
 ---
 
 ##  Table of Contents
 
-- [About the Project](#-about-the-project)
-- [Features](#-features)
-- [Tech Stack](#️-tech-stack)
-- [Architecture](#️-architecture)
-- [Screenshots](#-screenshots)
-- [Getting Started](#-getting-started)
-    - [Using Docker (Recommended)](#using-docker-recommended-)
-    - [Manual Setup](#manual-setup-️)
-- [API Documentation](#-api-documentation)
-- [Project Structure](#-project-structure)
-- [Database Schema](#️-database-schema)
-- [Security](#-security)
-- [Future Enhancements](#-future-enhancements)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Author](#-author)
+* [About the Project](#-about-the-project)
+* [Why PEMS?](#-why-pems)
+* [Features](#-features)
+* [Tech Stack](#️-tech-stack)
+* [Architecture](#️-architecture)
+* [Screenshots](#-screenshots)
+* [Getting Started](#-getting-started)
+
+  * [Prerequisites](#prerequisites)
+  * [Docker Setup](#-docker-setup-recommended)
+  * [Manual Setup](#-manual-setup)
+* [Environment Variables](#-environment-variables)
+* [API Documentation](#-api-documentation)
+* [Project Structure](#-project-structure)
+* [Database Schema](#️-database-schema)
+* [Security](#-security)
+* [Troubleshooting](#-troubleshooting)
+* [Testing](#-testing)
+* [Future Enhancements](#-future-enhancements)
+* [Contributing](#-contributing)
+* [License](#-license)
+* [Author](#-author)
+* [Show Your Support](#-show-your-support)
 
 ---
 
 ##  About the Project
 
-**PEMS (Personal Expense Management System)** is a full-stack web application that helps users take control of their personal finances. Users can track daily income and expenses, categorize transactions, visualize spending patterns with interactive charts, and monitor their monthly savings — all secured with JWT-based authentication.
+**PEMS (Personal Expense Management System)** is a full-stack web application designed to help users manage their personal finances in one place.
 
-This project demonstrates **production-grade full-stack development** including REST API design, database modeling, JWT authentication, containerization, and modern frontend development with React.
+Users can:
 
-### Why PEMS?
+* Track daily income and expenses
+* Organize transactions into categories
+* Filter transactions by category and date
+* Monitor monthly income, expenses, and savings
+* Visualize financial data using interactive charts
+* Manage income and expense categories
+* Secure their account using JWT-based authentication
 
--  **Real-time Analytics** — Visualize where your money goes
--  **Secure** — JWT authentication with BCrypt password hashing
--  **One-Command Setup** — Docker Compose runs everything
--  **Responsive** — Works on desktop, tablet, and mobile
--  **Production-Ready** — Nginx-served React build, layered backend
-
----
-
-##  Features
-
-###  Authentication & Security
-- JWT (JSON Web Token) based stateless authentication
-- BCrypt password hashing (passwords never stored in plain text)
-- Protected routes on both frontend and backend
-- CORS configuration for secure cross-origin requests
-- Global exception handling with consistent error responses
-
-###  Expense Management
-- Add / Edit / Delete expenses
-- Categorize expenses (Food, Travel, Shopping, Bills, Health, etc.)
-- Filter by category and date range
-- Pagination support for large datasets
-- Multiple payment methods (UPI, Cash, Card, Net Banking)
-
-###  Income Management
-- Add / Edit / Delete incomes
-- Categorize incomes (Salary, Freelance, Business, Investment, Gift, etc.)
-- Filter by category and date range
-- Full CRUD operations
-
-### 📊 Dashboard & Analytics
-- **Cards:** Total Income, Total Expense, Net Savings, Monthly Income, Monthly Expense, Monthly Savings, Today's Expense, Total Transactions
-- **Pie Charts:** Category-wise expense and income breakdown
-- **Bar Chart:** Income vs Expense comparison (Total & Monthly)
-
-###  Category Management
-- Separate categories for income and expenses
-- Full CRUD operations
-- Pre-seeded default categories
-
-###  DevOps
-- Fully Dockerized (Frontend + Backend + Database)
-- One-command startup with Docker Compose
-- Nginx serving the production build of the React app
-- Multi-stage Docker builds for optimized image sizes
-- Persistent MySQL volume for data safety
+The project demonstrates full-stack development using **Spring Boot, React, MySQL, REST APIs, JWT authentication, Docker, and Nginx**.
 
 ---
 
-## ️ Tech Stack
+## 💡 Why PEMS?
 
-### Backend
-| Technology | Purpose |
-|-----------|---------|
-| **Java 21** | Programming Language |
-| **Spring Boot 4.1.1** | Backend Framework |
-| **Spring Security** | Authentication & Authorization |
-| **Spring Data JPA** | ORM / Database Access |
-| **Hibernate** | JPA Implementation |
-| **JWT (jjwt 0.13)** | Token-based Auth |
-| **MySQL 8** | Relational Database |
-| **Maven** | Build Tool |
-| **Swagger / OpenAPI 3** | API Documentation |
-| **Bean Validation** | Input Validation |
+*  **Real-Time Analytics** — Understand spending and income patterns through visual dashboards
+*  **Secure Authentication** — JWT authentication with BCrypt password hashing
+*  **Dockerized** — Frontend, backend, and database can run together using Docker Compose
+*  **Responsive UI** — Designed to work across desktop, tablet, and mobile screens
+*  **REST API Architecture** — Clean separation between frontend and backend
+*  **Persistent Database** — MySQL data is stored using Docker volumes
+*  **API Documentation** — Swagger/OpenAPI documentation included
 
-### Frontend
-| Technology | Purpose |
-|-----------|---------|
-| **React 19** | UI Library |
-| **Vite** | Build Tool / Dev Server |
-| **React Router v7** | Client-side Routing |
-| **Axios** | HTTP Client with Interceptors |
-| **Recharts** | Data Visualization |
-| **CSS3** | Custom Styling |
+---
 
-### DevOps
-| Technology | Purpose |
-|-----------|---------|
-| **Docker** | Containerization |
+# ✨ Features
+
+##  Authentication & Security
+
+* JWT-based stateless authentication
+* BCrypt password hashing
+* Protected frontend routes
+* Protected backend REST endpoints
+* CORS configuration
+* Bean Validation for request data
+* Global exception handling
+* Environment-based configuration for sensitive values
+
+---
+
+##  Expense Management
+
+* Add expenses
+* Edit expenses
+* Delete expenses
+* Categorize expenses
+* Filter by category
+* Filter by date range
+* Pagination support
+* Multiple payment methods:
+
+  * UPI
+  * Cash
+  * Card
+  * Net Banking
+
+---
+
+##  Income Management
+
+* Add income
+* Edit income
+* Delete income
+* Categorize income
+* Filter by category
+* Filter by date range
+* Full CRUD operations
+* Income categories such as:
+
+  * Salary
+  * Freelance
+  * Business
+  * Investment
+  * Gift
+
+---
+
+##  Dashboard & Analytics
+
+The dashboard provides an overview of the user's financial activity.
+
+### Summary Cards
+
+* Total Income
+* Total Expense
+* Net Savings
+* Monthly Income
+* Monthly Expense
+* Monthly Savings
+* Today's Expense
+* Total Transactions
+
+### Charts
+
+* Category-wise expense breakdown
+* Category-wise income breakdown
+* Income vs Expense comparison
+* Total and monthly financial comparisons
+
+---
+
+## ️ Category Management
+
+* Separate income and expense categories
+* Create categories
+* Read categories
+* Update categories
+* Delete categories
+* Pre-seeded default categories
+
+---
+
+## 🐳 DevOps & Docker
+
+* Dockerized frontend
+* Dockerized backend
+* Dockerized MySQL database
+* Docker Compose orchestration
+* Multi-stage Docker builds
+* Nginx production server
+* Persistent MySQL volume
+* One-command application startup
+
+---
+
+#  Tech Stack
+
+## Backend
+
+| Technology              | Purpose                        |
+| ----------------------- | ------------------------------ |
+| **Java 21**             | Programming Language           |
+| **Spring Boot 4.1.1**   | Backend Framework              |
+| **Spring Security**     | Authentication & Authorization |
+| **Spring Data JPA**     | Database Access                |
+| **Hibernate**           | JPA Implementation             |
+| **JWT / jjwt 0.13**     | Token-based Authentication     |
+| **MySQL 8**             | Relational Database            |
+| **Maven**               | Build Tool                     |
+| **Swagger / OpenAPI 3** | API Documentation              |
+| **Bean Validation**     | Input Validation               |
+
+## Frontend
+
+| Technology          | Purpose                         |
+| ------------------- | ------------------------------- |
+| **React 19**        | UI Library                      |
+| **Vite**            | Build Tool / Development Server |
+| **React Router v7** | Client-side Routing             |
+| **Axios**           | HTTP Client                     |
+| **Recharts**        | Data Visualization              |
+| **CSS3**            | Custom Styling                  |
+
+## DevOps
+
+| Technology         | Purpose                       |
+| ------------------ | ----------------------------- |
+| **Docker**         | Containerization              |
 | **Docker Compose** | Multi-container Orchestration |
-| **Nginx** | Web Server for Frontend |
+| **Nginx**          | Production Frontend Server    |
 
 ---
 
-##  Architecture
+#  Architecture
+
+## System Architecture
 
 ```mermaid
 flowchart TD
-    User([👤 User Browser]) -->|HTTP :80| Nginx[Nginx Frontend<br>Port 80]
-    Nginx -->|/api/* proxy| Spring[Spring Boot App<br>Port 8080]
-    Spring -->|JDBC| MySQL[(MySQL Database<br>Port 3306)]
-    
+    User([👤 User Browser]) -->|HTTP :80| Nginx[Nginx Frontend<br/>Port 80]
+    Nginx -->|/api/* proxy| Spring[Spring Boot App<br/>Port 8080]
+    Spring -->|JDBC| MySQL[(MySQL Database<br/>Port 3306)]
+
     style User fill:#e1f5fe,stroke:#01579b,stroke-width:2px
     style Nginx fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
     style Spring fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
     style MySQL fill:#fff3e0,stroke:#e65100,stroke-width:2px
 ```
 
-### Layered Backend Architecture
+## Layered Backend Architecture
 
 ```text
-Controller  →  Service  →  Repository  →  Entity  →  Database
-   (API)      (Logic)      (Data Access)  (Tables)    (MySQL)
+Controller
+    ↓
+Service
+    ↓
+Repository
+    ↓
+Entity
+    ↓
+MySQL Database
 ```
 
-###  Authentication Flow
+### Responsibilities
+
+| Layer      | Responsibility               |
+| ---------- | ---------------------------- |
+| Controller | Handles REST API requests    |
+| Service    | Contains business logic      |
+| Repository | Performs database operations |
+| Entity     | Represents database tables   |
+| Database   | Stores application data      |
+
+---
+
+##  Authentication Flow
 
 ```mermaid
 sequenceDiagram
@@ -161,208 +265,273 @@ sequenceDiagram
     B->>B: Verify password (BCrypt)
     B->>B: Generate JWT token
     B-->>F: Return token + user info
-    F->>F: Store token in localStorage
+    F->>F: Store token
     F-->>U: Redirect to Dashboard
-    
+
     Note over F,B: Future requests include<br/>Authorization: Bearer <token>
 ```
 
-### Data Flow
+---
 
-1. **User Browser** sends HTTP request to Nginx.
-2. **Nginx** serves the React app and proxies `/api/*` requests to the backend.
-3. **Spring Boot** verifies the JWT token and executes business logic in the service layer.
-4. **Hibernate/JPA** fetches or persists data in **MySQL**.
-5. Response travels back the same route to the user.
+##  Data Flow
+
+1. User interacts with the React frontend.
+2. Nginx serves the frontend application.
+3. API requests under `/api/*` are forwarded to Spring Boot.
+4. Spring Security validates the JWT token.
+5. Controllers pass requests to the service layer.
+6. Services communicate with repositories.
+7. JPA/Hibernate interacts with MySQL.
+8. The response travels back to the frontend.
 
 ---
 
-##  Screenshots
+# 📸 Screenshots
 
-### Login Page
+## Login
+
 ![Login](docs/screenshots/Login.png)
 
-### Register Page
+## Register
+
 ![Register](docs/screenshots/Register.png)
 
-### Dashboard
+## Dashboard
+
 ![Dashboard](docs/screenshots/Dashboard_page.png)
 
-### Dashboard Night
+## Dashboard — Night Mode
+
 ![Dashboard Night](docs/screenshots/dashboard_night.png)
 
-### Dashboard with Charts
-![Dashboard](docs/screenshots/Dashboard_with_Chrts.png)
+## Dashboard — Charts
 
-### Expenses
+![Dashboard Charts](docs/screenshots/Dashboard_with_Chrts.png)
+
+## Expenses
+
 ![Expenses](docs/screenshots/Expenses.png)
 
-### Incomes
+## Incomes
+
 ![Incomes](docs/screenshots/Incomes.png)
 
-### Categories
+## Categories
+
 ![Categories](docs/screenshots/Categories.png)
 
 ---
 
-##  Getting Started
+#  Getting Started
 
-Follow these steps to run the project on your local machine.
+Follow the instructions below to run PEMS locally.
 
-###  Prerequisites
+## Prerequisites
 
-Before you begin, make sure you have:
+### Recommended
 
-- **Docker Desktop** installed — [Download here](https://www.docker.com/products/docker-desktop)
-    - For Windows: Enable WSL 2 during installation
-    - For Mac: Choose the right chip (Intel / Apple Silicon)
-- **Git** installed — [Download here](https://git-scm.com/downloads)
+* Docker Desktop
+* Git
 
-That's it! Docker will handle Java, Node.js, MySQL, and everything else.
+Docker handles the required Java, Node.js, MySQL, and application dependencies.
 
-> 💡 **No Docker?** Jump to the [Manual Setup](#manual-setup-️) section below.
+### Manual Setup
+
+If Docker is not available:
+
+* Java 21
+* Node.js 20+
+* MySQL 8
+* Git
 
 ---
 
-### 🐳 Quick Start with Docker (Recommended)
+# 🐳 Docker Setup — Recommended
 
-#### Step 1: Clone the Repository
+## Step 1 — Clone the Repository
 
 ```bash
 git clone https://github.com/pankajkevat21/personal-expense-management-system.git
-cd pems
+cd personal-expense-management-system
 ```
 
-#### Step 2: Set Up Environment Variables
+---
 
-Create a `.env` file in the root directory:
+## Step 2 — Create Environment Variables
 
-```bash
-# Generate a secure JWT secret (Base64)
-# Mac/Linux:
-openssl rand -base64 64
-
-# Windows (PowerShell):
-[Convert]::ToBase64String((1..64 | ForEach-Object { Get-Random -Maximum 256 }))
-```
-
-Copy the output and create a `.env` file with:
+Create a `.env` file in the project root:
 
 ```env
-JWT_SECRET=<paste-your-generated-secret-here>
+JWT_SECRET=<your-generated-jwt-secret>
 DB_PASSWORD=rootpassword
 ```
 
-> ⚠️ **Never commit `.env` to Git!** It's already in `.gitignore`.
+Generate a secure JWT secret:
 
-#### Step 3: Start All Services
+### macOS / Linux
+
+```bash
+openssl rand -base64 64
+```
+
+### Windows PowerShell
+
+```powershell
+[Convert]::ToBase64String((1..64 | ForEach-Object { Get-Random -Maximum 256 }))
+```
+
+> ⚠️ Never commit `.env` to Git. Make sure it is included in `.gitignore`.
+
+---
+
+## Step 3 — Start the Application
 
 ```bash
 docker-compose up --build
 ```
 
-**First run will take 3-5 minutes** (downloads dependencies). Subsequent runs are much faster.
+The first build may take several minutes because Docker needs to download dependencies and build the application images.
 
-#### Step 4: Access the Application
+---
 
-Once you see logs like `Started PemsApplication` and `nginx: ready`, open:
+## Step 4 — Access the Application
 
-| Service | URL | Credentials |
-|---------|-----|-------------|
-|  **Frontend** | http://localhost | Register a new account |
-|  **Swagger UI** | http://localhost:8080/swagger-ui.html | — |
-| ️ **MySQL** | localhost:3307 | root / rootpassword |
+| Service       | URL                                   |
+| ------------- | ------------------------------------- |
+|  Frontend   | http://localhost                      |
+|  Swagger UI | http://localhost:8080/swagger-ui.html |
+|  MySQL     | localhost:3307                        |
 
-#### Step 5: Try It Out!
+Register a new account from the application to start using PEMS.
 
-1. Go to http://localhost/register
-2. Create an account (email + password)
-3. Login with the same credentials
-4. Add some categories (Food, Salary, etc.)
-5. Add an income and an expense
-6. Check out the Dashboard with charts! 
+---
 
-#### Stopping the Application
+## Step 5 — Try the Application
+
+1. Open `http://localhost`
+2. Register a new account
+3. Login
+4. Create income categories
+5. Create expense categories
+6. Add income
+7. Add expenses
+8. Open the Dashboard
+9. Review charts and savings information
+
+---
+
+## Stop the Application
+
+Stop containers while preserving database data:
 
 ```bash
-# Stop containers (data is preserved)
 docker-compose down
+```
 
-# Stop AND delete all data (fresh start)
+Stop containers and remove database volumes:
+
+```bash
 docker-compose down -v
 ```
 
-#### Viewing Logs
+> ⚠️ `docker-compose down -v` deletes the persisted MySQL data.
+
+---
+
+## View Docker Logs
+
+### All services
 
 ```bash
-# All services
 docker-compose logs -f
+```
 
-# Specific service
+### Backend
+
+```bash
 docker-compose logs -f backend
+```
+
+### Frontend
+
+```bash
 docker-compose logs -f frontend
+```
+
+### MySQL
+
+```bash
 docker-compose logs -f mysql
 ```
 
 ---
 
-###  Manual Setup
+#  Manual Setup
 
-If you prefer running services directly (without Docker):
+If you prefer running the backend, frontend, and database separately, follow these steps.
 
-#### Prerequisites
+## Step 1 — Configure MySQL
 
-- **Java 21** — [Download](https://adoptium.net/)
-- **Node.js 20+** — [Download](https://nodejs.org/)
-- **MySQL 8** — [Download](https://dev.mysql.com/downloads/mysql/)
-
-#### Step 1: Set Up MySQL Database
-
-Open MySQL and run:
+Create the database:
 
 ```sql
 CREATE DATABASE pems_db;
 USE pems_db;
 ```
 
-Then run the `init.sql` file:
+Run the initialization script:
 
 ```bash
 mysql -u root -p pems_db < init.sql
 ```
 
-This creates all tables and seeds default categories.
+The script creates the required database tables and seeds default categories.
 
-#### Step 2: Configure Backend
+---
 
-Set environment variables:
+## Step 2 — Configure Backend
 
-**Mac/Linux:**
+Set the required environment variables.
+
+### macOS / Linux
+
 ```bash
 export DB_PASSWORD=your_mysql_root_password
 export JWT_SECRET=$(openssl rand -base64 64)
 ```
 
-**Windows (PowerShell):**
+### Windows PowerShell
+
 ```powershell
 $env:DB_PASSWORD="your_mysql_root_password"
 $env:JWT_SECRET=[Convert]::ToBase64String((1..64 | ForEach-Object { Get-Random -Maximum 256 }))
 ```
 
-Update `src/main/resources/application.properties` if your MySQL runs on a different host/port.
+If your MySQL server uses a different host or port, update:
 
-#### Step 3: Run Backend
+```text
+src/main/resources/application.properties
+```
+
+---
+
+## Step 3 — Run Backend
 
 ```bash
-cd pems
 ./mvnw spring-boot:run
 ```
 
-Backend runs at: **http://localhost:8080**
+Backend:
 
-#### Step 4: Run Frontend
+```text
+http://localhost:8080
+```
 
-Open a new terminal:
+---
+
+## Step 4 — Run Frontend
+
+Open another terminal:
 
 ```bash
 cd pems-frontend
@@ -370,129 +539,79 @@ npm install
 npm run dev
 ```
 
-Frontend runs at: **http://localhost:5173**
+Frontend:
 
-> 💡 Vite is configured to proxy `/api/*` requests to `http://localhost:8080`.
+```text
+http://localhost:5173
+```
+
+The Vite configuration proxies `/api/*` requests to the backend.
 
 ---
 
-### ❓ Troubleshooting
+#  Environment Variables
 
-#### Port 80 or 8080 already in use?
+| Variable      | Description                    | Example                       |
+| ------------- | ------------------------------ | ----------------------------- |
+| `JWT_SECRET`  | Secret used to sign JWT tokens | Generated secure Base64 value |
+| `DB_PASSWORD` | MySQL database password        | `rootpassword`                |
 
-**Solution:** Change the port in `docker-compose.yml`:
-
-```yaml
-frontend:
-  ports:
-    - "3000:80"    # Access at http://localhost:3000
-
-backend:
-  ports:
-    - "8081:8080"  # Access at http://localhost:8081
-```
-
-#### Backend fails to connect to MySQL?
-
-**Solution:** Make sure MySQL container is healthy first:
-
-```bash
-docker-compose logs mysql
-```
-
-Wait for `ready for connections`, then restart backend:
-
-```bash
-docker-compose restart backend
-```
-
-#### `401 Unauthorized` on every request?
-
-**Solution:** Your JWT token may have expired (24-hour expiry). Log out and log in again.
-
-#### Database has old data after code changes?
-
-**Solution:** Wipe the volume and start fresh:
-
-```bash
-docker-compose down -v
-docker-compose up --build
-```
-
-#### Frontend shows blank page?
-
-**Solution:** Check browser console (F12) for errors. Verify frontend container is running:
-
-```bash
-docker ps
-docker-compose logs frontend
-```
+> Never commit real credentials, JWT secrets, passwords, API keys, or other sensitive configuration to GitHub.
 
 ---
 
-###  One-Minute Demo (For the Impatient)
+#  API Documentation
 
-```bash
-git clone https://github.com/pankajkevat21/personal-expense-management-system.git
-cd personal-expense-management-system
-echo "JWT_SECRET=$(openssl rand -base64 64)" > .env
-echo "DB_PASSWORD=rootpassword" >> .env
-docker-compose up --build
-```
+PEMS provides Swagger/OpenAPI documentation.
 
-Then open http://localhost and register. Done! 
+Once the backend is running:
 
----
-
-##  API Documentation
-
-Once the backend is running, access **Swagger UI** at:
-
-```
+```text
 http://localhost:8080/swagger-ui.html
 ```
 
-### Main API Endpoints
+## Main API Endpoints
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| `POST` | `/api/auth/login` | User login | ❌ |
-| `POST` | `/api/users` | Register new user | ❌ |
-| `GET` | `/api/users` | Get all users | ✅ |
-| `GET` | `/api/expenses` | Get all expenses (paginated) | ✅ |
-| `POST` | `/api/expenses` | Create expense | ✅ |
-| `PUT` | `/api/expenses/{id}` | Update expense | ✅ |
-| `DELETE` | `/api/expenses/{id}` | Delete expense | ✅ |
-| `GET` | `/api/incomes` | Get all incomes | ✅ |
-| `POST` | `/api/incomes` | Create income | ✅ |
-| `PUT` | `/api/incomes/{id}` | Update income | ✅ |
-| `DELETE` | `/api/incomes/{id}` | Delete income | ✅ |
-| `GET` | `/api/dashboard` | Get dashboard analytics | ✅ |
-| `GET` | `/api/categories` | Get expense categories | ✅ |
-| `POST` | `/api/categories` | Create expense category | ✅ |
-| `GET` | `/api/income-categories` | Get income categories | ✅ |
-| `POST` | `/api/income-categories` | Create income category | ✅ |
+| Method   | Endpoint                 | Description             | Auth |
+| -------- | ------------------------ | ----------------------- | ---- |
+| `POST`   | `/api/auth/login`        | User login              | ❌    |
+| `POST`   | `/api/users`             | Register user           | ❌    |
+| `GET`    | `/api/users`             | Get users               | ✅    |
+| `GET`    | `/api/expenses`          | Get expenses            | ✅    |
+| `POST`   | `/api/expenses`          | Create expense          | ✅    |
+| `PUT`    | `/api/expenses/{id}`     | Update expense          | ✅    |
+| `DELETE` | `/api/expenses/{id}`     | Delete expense          | ✅    |
+| `GET`    | `/api/incomes`           | Get incomes             | ✅    |
+| `POST`   | `/api/incomes`           | Create income           | ✅    |
+| `PUT`    | `/api/incomes/{id}`      | Update income           | ✅    |
+| `DELETE` | `/api/incomes/{id}`      | Delete income           | ✅    |
+| `GET`    | `/api/dashboard`         | Dashboard analytics     | ✅    |
+| `GET`    | `/api/categories`        | Get expense categories  | ✅    |
+| `POST`   | `/api/categories`        | Create expense category | ✅    |
+| `GET`    | `/api/income-categories` | Get income categories   | ✅    |
+| `POST`   | `/api/income-categories` | Create income category  | ✅    |
 
 ### Authentication
 
-All protected endpoints require a Bearer token in the header:
+Protected endpoints require a Bearer token:
 
-```
+```http
 Authorization: Bearer <your_jwt_token>
 ```
 
 ---
 
-##  Project Structure
+#  Project Structure
 
-```
+```text
 pems/
 ├── src/main/java/com/example/pems/
-│   ├── config/              # Security, CORS, OpenAPI config
+│   ├── config/
 │   │   ├── SecurityConfig.java
 │   │   ├── CorsConfig.java
 │   │   └── OpenApiConfig.java
-│   ├── controller/          # REST API endpoints
+│   │
+│   ├── controller/
 │   │   ├── AuthController.java
 │   │   ├── UserController.java
 │   │   ├── ExpenseController.java
@@ -500,49 +619,62 @@ pems/
 │   │   ├── CategoryController.java
 │   │   ├── IncomeCategoryController.java
 │   │   └── DashboardController.java
-│   ├── dto/                 # Data Transfer Objects
+│   │
+│   ├── dto/
 │   │   ├── LoginRequest.java
 │   │   ├── DashboardResponse.java
 │   │   └── ErrorResponse.java
-│   ├── entity/              # JPA entities (DB tables)
+│   │
+│   ├── entity/
 │   │   ├── User.java
 │   │   ├── Expense.java
 │   │   ├── Income.java
 │   │   ├── Category.java
 │   │   └── IncomeCategory.java
-│   ├── exception/           # Global exception handling
+│   │
+│   ├── exception/
 │   │   ├── GlobalExceptionHandler.java
 │   │   ├── ResourceNotFoundException.java
 │   │   └── BadRequestException.java
-│   ├── repository/          # Data access layer
-│   ├── security/            # JWT filter
+│   │
+│   ├── repository/
+│   │
+│   ├── security/
 │   │   └── JwtAuthenticationFilter.java
-│   └── service/             # Business logic
+│   │
+│   └── service/
+│
 ├── src/main/resources/
 │   └── application.properties
+│
 ├── pems-frontend/
 │   ├── src/
-│   │   ├── api/             # Axios instance with interceptors
-│   │   ├── components/      # Navbar, ProtectedRoute
-│   │   ├── pages/           # Login, Register, Dashboard, Expenses, Incomes, Categories
+│   │   ├── api/
+│   │   ├── components/
+│   │   ├── pages/
 │   │   └── App.jsx
-│   ├── nginx.conf           # Nginx config with /api proxy
-│   ├── vite.config.js       # Dev proxy to backend
+│   ├── nginx.conf
+│   ├── vite.config.js
 │   ├── package.json
 │   └── Dockerfile
-├── init.sql                 # DB schema + seed data
-├── Dockerfile               # Backend Dockerfile (multi-stage)
+│
+├── docs/
+│   └── screenshots/
+│
+├── init.sql
+├── Dockerfile
 ├── .dockerignore
-├── docker-compose.yml       # Multi-container setup
+├── docker-compose.yml
 ├── pom.xml
+├── .gitignore
 └── README.md
 ```
 
 ---
 
-##  Database Schema
+# 🗄️ Database Schema
 
-### ER Diagram
+## ER Diagram
 
 ```mermaid
 erDiagram
@@ -559,6 +691,7 @@ erDiagram
         datetime created_at
         datetime updated_at
     }
+
     EXPENSES {
         bigint id PK
         bigint user_id FK
@@ -570,6 +703,7 @@ erDiagram
         varchar payment_method
         varchar currency
     }
+
     INCOMES {
         bigint id PK
         bigint user_id FK
@@ -580,103 +714,275 @@ erDiagram
         varchar description
         varchar payment_method
     }
+
     EXPENSE_CATEGORIES {
         bigint id PK
         varchar name
     }
+
     INCOME_CATEGORIES {
         bigint id PK
         varchar name
     }
 ```
 
-### Tables
+## Users
 
-#### `users`
-| Column | Type | Notes |
-|--------|------|-------|
-| id | BIGINT | PK, Auto-increment |
-| name | VARCHAR(100) | Not null |
-| email | VARCHAR(150) | Unique, Not null |
-| password | VARCHAR(255) | BCrypt hashed |
-| created_at | DATETIME | Auto-set |
-| updated_at | DATETIME | Auto-set |
+| Column       | Type         | Notes                       |
+| ------------ | ------------ | --------------------------- |
+| `id`         | BIGINT       | Primary Key, Auto-increment |
+| `name`       | VARCHAR(100) | Not null                    |
+| `email`      | VARCHAR(150) | Unique, Not null            |
+| `password`   | VARCHAR(255) | BCrypt hashed               |
+| `created_at` | DATETIME     | Auto-set                    |
+| `updated_at` | DATETIME     | Auto-set                    |
 
-#### `expenses`
-| Column | Type | Notes |
-|--------|------|-------|
-| id | BIGINT | PK |
-| user_id | BIGINT | FK → users |
-| category_id | BIGINT | FK → expense_categories |
-| amount | DECIMAL(12,2) | Not null |
-| expense_date | DATE | Not null |
-| payment_method | VARCHAR(255) | UPI, Cash, Card |
-| description | VARCHAR(500) | Optional |
+## Expenses
 
-#### `incomes`
-Similar to expenses with `income_category_id` and `income_date`.
+| Column           | Type          | Notes                   |
+| ---------------- | ------------- | ----------------------- |
+| `id`             | BIGINT        | Primary Key             |
+| `user_id`        | BIGINT        | FK → users              |
+| `category_id`    | BIGINT        | FK → expense_categories |
+| `amount`         | DECIMAL(12,2) | Not null                |
+| `expense_date`   | DATE          | Not null                |
+| `payment_method` | VARCHAR(255)  | UPI, Cash, Card         |
+| `description`    | VARCHAR(500)  | Optional                |
 
-#### `expense_categories` / `income_categories`
-| Column | Type | Notes |
-|--------|------|-------|
-| id | BIGINT | PK |
-| name | VARCHAR(100) | Unique, Not null |
+## Incomes
 
----
+Income records contain fields similar to expenses, including:
 
-##  Security
+* `id`
+* `user_id`
+* `income_category_id`
+* `amount`
+* `income_date`
+* `income_time`
+* `description`
+* `payment_method`
 
-- **JWT Authentication** — Tokens signed with HMAC-SHA, expire after 24 hours
-- **BCrypt Password Hashing** — Passwords never stored in plain text
-- **Stateless Sessions** — No server-side session storage
-- **CORS** — Only whitelisted origins (`localhost:*`, `127.0.0.1:*`) can access the API
-- **Input Validation** — All DTOs use Bean Validation (`@NotNull`, `@Size`, `@Email`, etc.)
-- **Global Exception Handler** — Consistent error responses with proper HTTP status codes
-- **Environment Variables** — Secrets (DB password, JWT secret) never hardcoded
+## Categories
 
----
+Both expense and income categories contain:
 
-##  Future Enhancements
-
--  Budget management with alerts
--  Recurring transactions (auto salary/rent)
--  Export reports to PDF/CSV
--  Email notifications for monthly summary
--  Multi-currency support
--  Mobile app (React Native)
--  Bill reminders
--  Receipt image upload
--  Unit & integration tests (JUnit + Mockito)
--  CI/CD pipeline (GitHub Actions)
+| Column | Type         | Notes            |
+| ------ | ------------ | ---------------- |
+| `id`   | BIGINT       | Primary Key      |
+| `name` | VARCHAR(100) | Unique, Not null |
 
 ---
 
-##  Contributing
+# ️ Security
 
-Contributions, issues, and feature requests are welcome!
+PEMS implements multiple security measures:
+
+*  **JWT Authentication** — Stateless token-based authentication
+*  **BCrypt Password Hashing** — Passwords are not stored as plain text
+*  **Protected Routes** — Unauthorized users cannot access protected application areas
+*  **CORS Configuration** — API access is restricted to configured origins
+*  **Input Validation** — DTOs use Bean Validation annotations
+* ⚠ **Global Exception Handling** — Consistent error responses
+*  **Environment Variables** — Sensitive configuration is externalized
+* ⏱ **JWT Expiration** — Tokens expire after the configured validity period
+
+---
+
+# ❓ Troubleshooting
+
+## Port 80 or 8080 Already in Use
+
+Change the ports in `docker-compose.yml`.
+
+Example:
+
+```yaml
+frontend:
+  ports:
+    - "3000:80"
+
+backend:
+  ports:
+    - "8081:8080"
+```
+
+Then access:
+
+```text
+http://localhost:3000
+```
+
+---
+
+## Backend Cannot Connect to MySQL
+
+Check MySQL logs:
+
+```bash
+docker-compose logs mysql
+```
+
+Wait until MySQL reports that it is ready for connections.
+
+Then restart the backend:
+
+```bash
+docker-compose restart backend
+```
+
+---
+
+## `401 Unauthorized` on Requests
+
+The JWT token may have expired.
+
+Try:
+
+1. Logout
+2. Login again
+3. Retry the request
+
+---
+
+## Database Contains Old Data
+
+To completely reset the database:
+
+```bash
+docker-compose down -v
+docker-compose up --build
+```
+
+> ⚠️ This removes the persisted database volume.
+
+---
+
+## Frontend Shows a Blank Page
+
+Open the browser developer console and check for errors.
+
+Then inspect the frontend container:
+
+```bash
+docker ps
+docker-compose logs frontend
+```
+
+---
+
+#  Testing
+
+The project roadmap includes automated testing using:
+
+* JUnit
+* Mockito
+* Unit tests
+* Integration tests
+
+If automated tests are added, they can be executed using the project's Maven test configuration:
+
+```bash
+./mvnw test
+```
+
+---
+
+#  One-Minute Demo
+
+For a quick Docker-based setup:
+
+```bash
+git clone https://github.com/pankajkevat21/personal-expense-management-system.git
+cd personal-expense-management-system
+
+echo "JWT_SECRET=$(openssl rand -base64 64)" > .env
+echo "DB_PASSWORD=rootpassword" >> .env
+
+docker-compose up --build
+```
+
+Then open:
+
+```text
+http://localhost
+```
+
+Register an account and start tracking your finances.
+
+---
+
+#  Future Enhancements
+
+Planned improvements include:
+
+*  Budget management with alerts
+*  Recurring transactions
+*  Export reports to PDF/CSV
+*  Email notifications for monthly summaries
+*  Multi-currency support
+*  Mobile application using React Native
+*  Bill reminders
+*  Receipt image uploads
+*  Unit and integration testing with JUnit + Mockito
+*  CI/CD pipeline using GitHub Actions
+
+---
+
+#  Contributing
+
+Contributions, issues, and feature requests are welcome.
+
+### Contribution Workflow
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Create a feature branch
+
+```bash
+git checkout -b feature/AmazingFeature
+```
+
+3. Make your changes
+4. Commit your changes
+
+```bash
+git commit -m "Add some AmazingFeature"
+```
+
+5. Push the branch
+
+```bash
+git push origin feature/AmazingFeature
+```
+
+6. Open a Pull Request
+
+Please keep contributions focused and include relevant documentation when adding new functionality.
 
 ---
 
+#  License
 
-##   Author
+This project is licensed under the **MIT License**.
 
-   **Pankaj Kevat**
-
--  Email: pankajkevat21@gmail.com
--   **LinkedIn:** [Pankaj Kevat](https://www.linkedin.com/in/pankaj-kevat-89393a3a6/)
--  GitHub: [@pankajkevat21](https://github.com/pankajkevat21/)
+See the [`LICENSE`](LICENSE) file for details.
 
 ---
 
-##  Show Your Support
+# 👨💻 Author
 
-If you liked this project, please give it a ⭐ on GitHub — it motivates me to build more!
+**Pankaj Kevat**
+
+*  Email: [pankajkevat21@gmail.com](mailto:pankajkevat21@gmail.com)
+*  LinkedIn: [Pankaj Kevat](https://www.linkedin.com/in/pankaj-kevat-89393a3a6/)
+*  GitHub: [@pankajkevat21](https://github.com/pankajkevat21)
+
+---
+
+#  Show Your Support
+
+If you found this project useful or interesting, consider giving the repository a ⭐ on GitHub.
+
+It helps support the project and encourages further development.
 
 ---
 
